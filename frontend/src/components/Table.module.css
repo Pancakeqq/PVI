@@ -1,0 +1,16 @@
+table, th, td {
+    border: 1px solid;
+    border-collapse: collapse;
+    font-size: large;
+  }
+  td{
+    width: 100px;
+  }
+
+  h3{
+    display: inline-block;
+  }
+
+  .addButton{
+    margin-left: 600px;
+  }

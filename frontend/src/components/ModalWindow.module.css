@@ -1,0 +1,46 @@
+.window{
+    border-radius: 10px;
+    border: 1px solid black;
+    background: white;
+    height: 350px;
+    width: 500px;
+    position: fixed;
+    margin: auto;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+h2{
+    position: relative;
+    padding: 0px 10px;
+    top: 10px;
+    margin: 0;
+    display: block;
+}
+
+.closebutton{
+    display: block;
+    position: relative;
+    left: 450px;
+    top: -15px;
+}
+
+.border{
+    background: black;
+    height: 1px;
+    margin: 10px;
+}
+label{
+    padding: 10px 30px;
+    display: inline-block;
+    text-align: right;
+}
+
+.submitbtn{
+    margin: 0px 40px 0px 350px;
+}
+
+select{
+    width: 175px;
+}

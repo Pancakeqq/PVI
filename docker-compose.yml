@@ -1,0 +1,27 @@
+version: '2.12.2'
+services:
+
+  front:
+    build: ./frontend
+    tty: true
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/app/frontend
+    depends_on:
+      - back
+    networks:
+      - app
+    
+  back:
+    build: ./backend
+    ports:
+      - 3001:3001
+    volumes:
+      - ./backend:/app/backend
+    networks:
+      - app
+
+networks:
+  app:
+    driver: bridge

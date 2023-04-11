@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./ModalWindow.module.css";
 import { useState } from "react";
-import axios from 'axios';
 
 const ModalWindow = (props) =>{
     const [group, setgroup]  = useState("PZ-21");
@@ -52,13 +51,16 @@ const ModalWindow = (props) =>{
                 console.log(data)
                 if(data == "correct"){
                     props.addStudent(student);
+                    props.hide();
+                }else{
+                    alert("Student data not valid!");
                 }
 
             })
             
 
 
-            props.hide();
+            
         // }
     }
     const validateBirthday = (event) =>{

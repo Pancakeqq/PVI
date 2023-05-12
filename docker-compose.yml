@@ -1,17 +1,17 @@
 version: '2.12.2'
 services:
 
-  front:
-    build: ./frontend
-    tty: true
-    ports:
-      - 3002:3000
-    volumes:
-      - ./frontend:/app/frontend
-    depends_on:
-      - back
-    networks:
-      - app
+  # front:
+  #   build: ./frontend
+  #   tty: true
+  #   ports:
+  #     - 3002:3000
+  #   volumes:
+  #     - ./frontend:/app/frontend
+  #   depends_on:
+  #     - back
+  #   networks:
+  #     - app
     
   back:
     build: ./backend

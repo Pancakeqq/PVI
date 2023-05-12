@@ -6,19 +6,34 @@ import Header from "./components/Header";
 function App() {
 
 
-  const [students, setstudents] = useState(JSON.parse(localStorage.getItem("students")) || []);
+  const [students, setstudents] = useState([]);
   const [isModalVisible, setisModalVisible] = useState(false);
   const [isModaladding, setisModaladding] = useState(true);
+  const [rerender, setrerender] = useState(false)
+
+ const render = () =>{
+  setrerender(prev => !prev);
+ }
 
   const addStudent = (student) =>{
     setstudents([...students, student]);
     localStorage.setItem("students", JSON.stringify([...students, student]));
   }
 
-  const removeStudent = (student) =>{
-    var newlist = students.filter(item => item.name !== student.name || item.surname !== student.surname)
-    setstudents(newlist)
-    localStorage.setItem("students", JSON.stringify(newlist));
+  useEffect(() =>{
+    fetch('http://localhost:3001/students').then(response => response.json()).then(data =>{
+    console.log(data)
+    setstudents(data)
+  })
+  },[rerender])
+
+
+  const removeStudent = (id) =>{
+
+    fetch(`http://localhost:3001/students?id=${id}`,{
+      method:"DELETE"
+    }).then(() => render())
+
   }
 
 
@@ -47,7 +62,7 @@ function App() {
     </nav>
 <Table show = {showModalWindow} remove = {removeStudent} addStudent = {addStudent} students = {students}></Table>
 </div>
-  {isModalVisible && <ModalWindow type = {isModaladding ? "add" : "change"} addStudent = {addStudent} hide = {hideModalWindow}></ModalWindow>}
+  {isModalVisible && <ModalWindow type = {isModaladding ? "add" : "change"} render={render} addStudent = {addStudent} hide = {hideModalWindow}></ModalWindow>}
 
 </div>
 

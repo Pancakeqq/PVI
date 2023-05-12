@@ -8,69 +8,63 @@ const ModalWindow = (props) =>{
     const [surname, setsurname]  = useState("");
     const [gender, setgender]  = useState("Male");
     const [birthday, setbirthday]  = useState("");
-    // const [isnamevalid, setisnamevalid] = useState(false);
-    // const [issurnamevalid, setissurnamevalid] = useState(false);
-    // const [isbirthdayvalid, setisbirthdayvalid] = useState(false);
+    const [isnamevalid, setisnamevalid] = useState(false);
+    const [issurnamevalid, setissurnamevalid] = useState(false);
+    const [isbirthdayvalid, setisbirthdayvalid] = useState(false);
+
+
+    const groups = [ {value: "PZ-21"},{value: "PZ-22"},{value: "PZ-23"},{value: "PZ-24"},{value: "PZ-25"},{value: "PZ-26"} ];
 
 
     const validatename = (event) =>{
         setname(event.target.value)
-        // if (event.target.value.length < 4){
-        //     setisnamevalid(false);
-        // }else{
-        //     setisnamevalid(true);
-        // }
+        if (event.target.value.length < 4){
+            setisnamevalid(false);
+        }else{
+            setisnamevalid(true);
+        }
     }
     const validatesurname = (event) =>{
         setsurname(event.target.value)
-        // if (event.target.value.length < 4){
-        //     setissurnamevalid(false);
-        // }else{
-        //     setissurnamevalid(true);
-        // }
+        if (event.target.value.length < 4){
+            setissurnamevalid(false);
+        }else{
+            setissurnamevalid(true);
+        }
     }
 
     const submitForm = (event) =>{
         event.preventDefault();
-        // if (isnamevalid && issurnamevalid && isbirthdayvalid){
+        if (isnamevalid && issurnamevalid && isbirthdayvalid){
 
         var student = {group : group, name: name, surname: surname, gender: gender, birthday: birthday, status: "Online"}
-        const formdata = new FormData()
-        formdata.append("name", student.name)
-        formdata.append("surname", student.surname)
-        formdata.append("group", student.group)
-        formdata.append("birthday", student.birthday)
-        formdata.append("gender", student.gender)
+        const reqbody = {
+            "name": student.name,
+            "surname": student.surname,
+            "stgroup": student.group,
+            "birthday": student.birthday,
+            "gender": student.gender
+        }
 
-            fetch("http://localhost:3001", {
+            fetch("http://localhost:3001/students", {
                 method: "POST",
-                body: formdata,
+                body: JSON.stringify(reqbody),
             }).then(response => response.json())
             .then(data => {
-                
                 console.log(data)
-                if(data == "correct"){
-                    props.addStudent(student);
-                    props.hide();
-                }else{
-                    alert("Student data not valid!");
-                }
-
+                props.hide()
             })
-            
-
-
-            
-        // }
+            props.render()
+        }
     }
     const validateBirthday = (event) =>{
         setbirthday(event.target.value);
 
-        // if(event.target.value.split('-')[0] > 2023 || event.target.value.split('-')[0] < 1920){
-        //     setisbirthdayvalid(false);
-        // }else{
-        //     setisbirthdayvalid(true);
-        // }
+        if(event.target.value.split('-')[0] > 2023 || event.target.value.split('-')[0] < 1920){
+            setisbirthdayvalid(false);
+        }else{
+            setisbirthdayvalid(true);
+        }
     }
 
     return(
@@ -80,12 +74,11 @@ const ModalWindow = (props) =>{
             <div className={styles.border}></div>
             <label>Group&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
             <select name = "group" onChange ={(event) => {setgroup(event.target.value)}}>
-                <option value="PZ-21">PZ-21</option>
-                <option value="PZ-22">PZ-22</option>
-                <option value="PZ-23">PZ-23</option>
-                <option value="PZ-24">PZ-24</option>
-                <option value="PZ-25">PZ-25</option>
-                <option value="PZ-26">PZ-26</option>
+                {groups.map( (el) =>{
+                    return(
+                        <option value={el.value}>{el.value}</option>
+                    )
+                })}
             </select><br/>
             <label>First name</label>
             <input type="text" value={name} onChange={validatename} name= "firstname"></input><br/>

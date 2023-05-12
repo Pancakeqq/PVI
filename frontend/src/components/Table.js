@@ -3,7 +3,7 @@ import styles from "./Table.module.css"
 
 const Table = (props) =>{
     const removeSt = (el) =>{
-        props.remove(el)
+        props.remove(el.id)
     }
 
     const changeSt = (el) => {
@@ -30,16 +30,16 @@ const Table = (props) =>{
             </tr>
             </thead>
             <tbody>
-            {props.students.map((el, idx) => {
+            { props.students.length > 0 && props.students.map((el) => {
                 return(
-                    <tr key = {idx}>
+                    <tr key = {el.id}>
                         <td><input type="checkbox"/></td>
-                        <td>{el.group}</td>
+                        <td>{el.stgroup}</td>
                         <td>{el.name}</td>
                         <td>{el.surname}</td>
                         <td>{el.gender}</td>
                         <td>{el.birthday}</td>
-                        <td>{el.status}</td>
+                        <td>{'active'}</td>
                         <td>
                             <input type="button" value="/" onClick={() => changeSt(el)}></input>
                             <input type="button" value="X"  onClick={() => removeSt(el)}></input>
